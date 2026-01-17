@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyCVnnPp3kiLRDnvbxAnN_GRuoIYxhzFwgk</string>
+	<key>GCM_SENDER_ID</key>
+	<string>36391250694</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.littleEmmi</string>
+	<key>PROJECT_ID</key>
+	<string>qubiqai-db7a3</string>
+	<key>STORAGE_BUCKET</key>
+	<string>qubiqai-db7a3.firebasestorage.app</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:36391250694:ios:eca43c1f911e7045f98c87</string>
+</dict>
+</plist>

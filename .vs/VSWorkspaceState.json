@@ -1,0 +1,14 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\build",
+    "\\build\\windows",
+    "\\build\\windows\\x64",
+    "\\build\\windows\\x64\\CMakeFiles",
+    "\\build\\windows\\x64\\CMakeFiles\\3.31.6-msvc6",
+    "\\build\\windows\\x64\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCXX",
+    "\\lib"
+  ],
+  "SelectedNode": "\\build\\windows\\x64\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCXX\\CompilerIdCXX.vcxproj",
+  "PreviewInSolutionExplorer": false
+}

@@ -1,0 +1,46 @@
+{
+  "subjects": [
+    {
+      "id": "biology",
+      "name": "Biology",
+      "icon": "🧬",
+      "lessons": [
+        {
+          "id": "bio_heart",
+          "title": "The Human Heart",
+          "description": "Real anatomical 3D heart model.",
+          "model_android": "https://emmibot123.github.io/app-assets/realistic_human_heart.glb",
+          "model_ios": "https://emmibot123.github.io/app-assets/Realistic_Human_Heart-2.usdz"
+        }
+      ]
+    },
+    {
+      "id": "history",
+      "name": "History",
+      "icon": "🏛️",
+      "lessons": [
+        {
+          "id": "Eiffel Tower",
+          "title": "The Eiffel Tower",
+          "description": "Eiffel Tower 3D model.",
+          "model_android": "https://emmibot123.github.io/app-assets/eiffel_tower.glb",
+          "model_ios": "https://emmibot123.github.io/app-assets/Eiffel_Tower.usdz"
+        }
+      ]
+    },
+    {
+      "id": "geography",
+      "name": "Geography",
+      "icon": "🌍",
+      "lessons": [
+        {
+          "id": "geo_earth",
+          "title": "Earth",
+          "description": "Watch the planets orbit.",
+          "model_android": "https://emmibot123.github.io/app-assets/earth-2.glb",
+          "model_ios": "https://emmibot123.github.io/app-assets/Earth.usdz"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "36391250694",
+    "project_id": "qubiqai-db7a3",
+    "storage_bucket": "qubiqai-db7a3.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:36391250694:android:3ac01d27327aeed6f98c87",
+        "android_client_info": {
+          "package_name": "com.example.little_emmi"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAiSa2vCqy4two7KkS38fMS7x5NtvaRIpE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

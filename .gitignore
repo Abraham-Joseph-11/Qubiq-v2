@@ -1,0 +1,81 @@
+# =========================
+# 1. Project Specific Large Folders
+# =========================
+Output/
+EMMI_BOT_V2_WIRED/
+
+# =========================
+# 2. Block Large Binary Files
+# =========================
+*.exe
+*.dll
+*.lib
+*.pdb
+*.zip
+*.tar
+*.gz
+*.rar
+*.7z
+*.mp4
+*.avi
+*.mov
+*.mkv
+*.apk
+*.aab
+*.ipa
+
+# =========================
+# 3. Standard Flutter/Dart
+# =========================
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.pub-cache/
+.pub/
+build/
+
+# =========================
+# 4. IDEs & Editors
+# =========================
+# IntelliJ / Android Studio
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# VS Code
+.vscode/
+
+# Mac / Windows System Files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+
+# =========================
+# 5. Platform Specific Build Artifacts
+# =========================
+# Android
+**/android/app/debug
+**/android/app/profile
+**/android/app/release
+
+# iOS
+**/ios/Flutter/.last_build_id
+**/ios/Flutter/App.framework
+**/ios/Flutter/Flutter.framework
+**/ios/Flutter/Generated.xcconfig
+**/ios/Flutter/app.flx
+**/ios/Flutter/app.zip
+**/ios/Flutter/flutter_assets/
+**/ios/ServiceDefinitions.json
+**/ios/Runner/GeneratedPluginRegistrant.*
+
+# Windows
+windows/flutter/ephemeral/
+ephemeral/
+
+# Linux
+linux/flutter/ephemeral/
+
+# Web
+web/build/
