@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
@@ -52,7 +51,7 @@ class _BlockCanvasState extends State<BlockCanvas> {
             // 1. THE ZOOMABLE CANVAS AREA
             Consumer<BlockProvider>(
               builder: (context, provider, _) => DragTarget<BlockModels>(
-                onWillAccept: (item) => item is BlockModels,
+                onWillAcceptWithDetails: (item) => item is BlockModels,
                 onAcceptWithDetails: (details) {
                   final box = _canvasKey.currentContext!.findRenderObject() as RenderBox;
                   final local = box.globalToLocal(details.offset);
@@ -164,7 +163,7 @@ class _BlockCanvasState extends State<BlockCanvas> {
 class _CanvasBlock extends StatefulWidget {
   final String id;
   final TransformationController controller;
-  const _CanvasBlock({Key? key, required this.id, required this.controller}) : super(key: key);
+  const _CanvasBlock({super.key, required this.id, required this.controller});
 
   @override
   State<_CanvasBlock> createState() => _CanvasBlockState();

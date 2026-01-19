@@ -6,6 +6,8 @@ import 'BlockPanels/loops.dart';
 import 'BlockPanels/movement.dart';
 
 class BlockPalette extends StatefulWidget {
+  const BlockPalette({super.key});
+
   @override
   State<BlockPalette> createState() => _BlockPaletteState();
 }

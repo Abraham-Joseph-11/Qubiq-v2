@@ -472,8 +472,9 @@ class AssignmentDetailScreen extends StatelessWidget {
     showDialog(context: context, builder: (context) => Center(child: Container(width: MediaQuery.of(context).size.width * 0.8, padding: const EdgeInsets.all(24), decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(28), boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 20)]), child: Material(color: Colors.transparent, child: Column(mainAxisSize: MainAxisSize.min, children: [const Icon(Icons.info_outline_rounded, color: Colors.indigo, size: 48), const SizedBox(height: 16), Text(title, style: GoogleFonts.poppins(fontSize: 20, fontWeight: FontWeight.bold)), const SizedBox(height: 12), Text(message, textAlign: TextAlign.center, style: GoogleFonts.poppins(fontSize: 14)), const SizedBox(height: 24), ElevatedButton(onPressed: () => Navigator.pop(context), style: ElevatedButton.styleFrom(backgroundColor: Colors.indigo, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))), child: const Text("OK", style: TextStyle(color: Colors.white)))])))).animate().scale().fadeIn());
   }
   void _launchAssignedTool(BuildContext context, String toolName) {
-    if (toolName.contains("Python")) Navigator.push(context, MaterialPageRoute(builder: (context) => const PythonIdeScreen()));
-    else if (toolName.contains("Flowchart")) Navigator.push(context, MaterialPageRoute(builder: (context) => const FlowchartIdeScreen()));
+    if (toolName.contains("Python")) {
+      Navigator.push(context, MaterialPageRoute(builder: (context) => const PythonIdeScreen()));
+    } else if (toolName.contains("Flowchart")) Navigator.push(context, MaterialPageRoute(builder: (context) => const FlowchartIdeScreen()));
     else if (toolName.contains("App Inventor") || toolName.contains("Mobile")) Navigator.push(context, MaterialPageRoute(builder: (context) => const MitDashboardScreen()));
     else if (toolName.contains("Little Emmi")) Navigator.pushNamed(context, '/app/robot_workspace');
     else if (toolName.contains("AR") || toolName.contains("3D")) Navigator.push(context, MaterialPageRoute(builder: (context) => ARDashboard()));

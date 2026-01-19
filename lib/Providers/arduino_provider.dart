@@ -9,7 +9,7 @@ class ArduinoProvider extends ChangeNotifier {
   SerialPortReader? _reader;
 
   // 2. STATE VARIABLES
-  List<String> _logs = [];
+  final List<String> _logs = [];
   bool get isConnected => _port != null && _port!.isOpen;
   List<String> get logs => _logs;
 

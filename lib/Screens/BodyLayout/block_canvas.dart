@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
@@ -54,7 +53,7 @@ class _BlockCanvasState extends State<BlockCanvas> {
           Positioned.fill(
             child: Consumer<BlockProvider>(
               builder: (context, provider, _) => DragTarget<BlockModels>(
-                onWillAccept: (item) => true,
+                onWillAcceptWithDetails: (item) => true,
                 onAcceptWithDetails: (details) {
                   final box = _canvasKey.currentContext!.findRenderObject() as RenderBox;
                   final Offset localOffset = box.globalToLocal(details.offset);
@@ -151,7 +150,7 @@ class _BlockCanvasState extends State<BlockCanvas> {
 class _CanvasBlock extends StatelessWidget {
   final String id;
   final TransformationController controller;
-  const _CanvasBlock({Key? key, required this.id, required this.controller}) : super(key: key);
+  const _CanvasBlock({super.key, required this.id, required this.controller});
 
   @override
   Widget build(BuildContext context) {

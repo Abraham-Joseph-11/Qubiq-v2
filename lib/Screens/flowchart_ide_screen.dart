@@ -138,7 +138,7 @@ class _FlowchartIdeViewState extends State<_FlowchartIdeView> {
   Widget _buildCodeAndTerminal({required bool isMobile}) {
     return Column(
       children: [
-        Container(
+        SizedBox(
           height: isMobile ? 300 : null,
           child: CodeTheme(
             data: CodeThemeData(styles: monokaiSublimeTheme),
@@ -266,7 +266,7 @@ class _FlowchartIdeViewState extends State<_FlowchartIdeView> {
           children: [
             Container(width: 200, color: Colors.grey[850], child: const FlowchartPalette()),
             const Expanded(flex: 3, child: FlowchartCanvas()),
-            Container(width: 350, child: _buildCodeAndTerminal(isMobile: false)),
+            SizedBox(width: 350, child: _buildCodeAndTerminal(isMobile: false)),
           ],
         ),
       ),

@@ -77,7 +77,9 @@ class BlockProvider extends ChangeNotifier {
       BlockModels loopBlock, void Function(String childId) fn) {
     if (loopBlock.children.isEmpty) return;
     final copy = List<String>.from(loopBlock.children);
-    for (final childId in copy) fn(childId);
+    for (final childId in copy) {
+      fn(childId);
+    }
   }
 
   // -------------------- Public methods (optimized) --------------------------
@@ -383,8 +385,9 @@ class BlockProvider extends ChangeNotifier {
 
     String currentId = _blocks[index].rightSnapId;
     double sumWidths = 0;
-    if (_blocks[index].type == 'movement')
+    if (_blocks[index].type == 'movement') {
       sumWidths = _blocks[index].size.width - 1;
+    }
     if (_blocks[index].type == 'loop') {
       sumWidths = _blocks[index].size.width - 10;
     }
@@ -396,9 +399,9 @@ class BlockProvider extends ChangeNotifier {
     while (currentId.isNotEmpty && currentId != loopBlock.id) {
       final chained = byId[currentId];
       if (chained == null) break;
-      if (chained.type == 'movement')
+      if (chained.type == 'movement') {
         sumWidths = sumWidths + (chained.size.width - 1);
-      else if (chained.type == 'loop') {
+      } else if (chained.type == 'loop') {
         sumWidths = sumWidths + (chained.size.width - 10);
       }
       chained.child = '';

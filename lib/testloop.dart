@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class ResizableNineSlice extends StatefulWidget {
   final String assetPath;
@@ -11,7 +10,7 @@ class ResizableNineSlice extends StatefulWidget {
   final int bottomPreserve;
 
   const ResizableNineSlice({
-    Key? key,
+    super.key,
     required this.assetPath,
     this.initialWidth = 240,
     this.initialHeight = 120,
@@ -19,7 +18,7 @@ class ResizableNineSlice extends StatefulWidget {
     this.topPreserve = 12,
     this.rightPreserve = 8,
     this.bottomPreserve = 10,
-  }) : super(key: key);
+  });
 
   @override
   _ResizableNineSliceState createState() => _ResizableNineSliceState();

@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:uuid/uuid.dart';
 
 // Model for Institutions (Managed by Super Admin)
 class MockInstitution {

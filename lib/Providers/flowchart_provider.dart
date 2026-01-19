@@ -116,11 +116,11 @@ class FlowchartProvider extends ChangeNotifier {
 
   void deleteBlock(String id) {
     _blocks.removeWhere((b) => b.id == id);
-    _blocks.forEach((b) {
+    for (var b in _blocks) {
       // Remove any references to the deleted block
       if (b.nextBlockId == id) b.nextBlockId = null;
       if (b.falseBlockId == id) b.falseBlockId = null;
-    });
+    }
     if (_selectedBlockId == id) _selectedBlockId = null;
     notifyListeners();
   }

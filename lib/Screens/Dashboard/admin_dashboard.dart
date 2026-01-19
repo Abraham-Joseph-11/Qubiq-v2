@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -422,7 +421,9 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen>
                 builder: (context, studentSnap) {
                   if(!studentSnap.hasData) return const LinearProgressIndicator();
                   Map<String, String> studentNames = {};
-                  for(var s in studentSnap.data!.docs) studentNames[s.id] = s['name'];
+                  for(var s in studentSnap.data!.docs) {
+                    studentNames[s.id] = s['name'];
+                  }
 
                   return ListView(
                     padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -435,7 +436,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen>
                           Text(name, style: GoogleFonts.poppins(fontWeight: FontWeight.w500)),
                           Container(padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4), decoration: BoxDecoration(color: isPresent ? Colors.green[100] : Colors.red[100], borderRadius: BorderRadius.circular(20)), child: Text(isPresent ? "Present" : "Absent", style: TextStyle(color: isPresent ? Colors.green[800] : Colors.red[800], fontSize: 12, fontWeight: FontWeight.bold)))
                         ]));
-                      }).toList()
+                      })
                     ],
                   );
                 },

@@ -12,6 +12,7 @@ import 'firebase_options.dart';
 // --- SCREENS IMPORTS ---
 import 'Screens/BodyLayout/body_layout.dart';
 import 'Screens/TopBar/top_bar.dart';
+import 'package:camera_windows/camera_windows.dart';
 
 // Auth & Launch & Activation
 import 'package:little_emmi/Screens/robot_launch_screen.dart';
@@ -37,6 +38,7 @@ Future<void> main() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   // If key doesn't exist, default to false (require activation)
   bool isActivated = prefs.getBool('is_activated') ?? false;
+  CameraWindows.registerWith();
 
   runApp(QubiQApp(isActivated: isActivated));
 }

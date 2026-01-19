@@ -169,7 +169,7 @@ class _TeacherDashboardScreenState extends State<TeacherDashboardScreen> {
                       border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide.none),
                       prefixIcon: Icon(Icons.menu_book, color: accentColor),
                     ),
-                    value: assignedChapter,
+                    initialValue: assignedChapter,
                     items: availableChapters.map((chapter) {
                       return DropdownMenuItem(
                         value: chapter,
@@ -212,7 +212,7 @@ class _TeacherDashboardScreenState extends State<TeacherDashboardScreen> {
                     border: hasAccess ? Border.all(color: accentColor.withOpacity(0.5)) : null,
                   ),
                   child: SwitchListTile(
-                    activeColor: accentColor,
+                    activeThumbColor: accentColor,
                     contentPadding: const EdgeInsets.symmetric(horizontal: 10),
                     title: Text(appName, style: GoogleFonts.poppins(fontWeight: FontWeight.w500, color: Colors.white, fontSize: 13)),
                     secondary: Icon(appIcon, color: hasAccess ? accentColor : Colors.white24, size: 20),

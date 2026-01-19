@@ -16,7 +16,6 @@ class FlowchartCanvas extends StatefulWidget {
 class _FlowchartCanvasState extends State<FlowchartCanvas> {
   final GlobalKey _canvasKey = GlobalKey();
 
-  // (All helper methods like _getIconForAnimation, _buildAnimationOverlay are unchanged)
   IconData _getIconForAnimation(String animType) {
     switch (animType) {
       case 'math': return Icons.calculate_outlined;
@@ -69,7 +68,6 @@ class _FlowchartCanvasState extends State<FlowchartCanvas> {
     );
   }
 
-  // vvv --- ADD THIS NEW WIDGET-BUILDING METHOD --- vvv
   /// Builds the delete button that floats over the selected block.
   Widget _buildDeleteButton(FlowchartProvider provider) {
     if (provider.selectedBlockId == null) {
@@ -94,7 +92,7 @@ class _FlowchartCanvasState extends State<FlowchartCanvas> {
           color: Colors.redAccent,
           shape: BoxShape.circle,
           boxShadow: [
-            BoxShadow(color: Colors.black.withOpacity(0.5), blurRadius: 4, offset: Offset(0, 2))
+            BoxShadow(color: Colors.black.withOpacity(0.5), blurRadius: 4, offset: const Offset(0, 2))
           ],
         ),
         child: IconButton(
@@ -108,7 +106,6 @@ class _FlowchartCanvasState extends State<FlowchartCanvas> {
       ),
     );
   }
-  // ^^^ --- END OF NEW METHOD --- ^^^
 
   @override
   Widget build(BuildContext context) {
@@ -120,7 +117,6 @@ class _FlowchartCanvasState extends State<FlowchartCanvas> {
               onTap: () => provider.clearSelection(),
               child: Container(
                 key: _canvasKey,
-                // The canvas color is now part of the grid painter
                 child: Stack(
                   fit: StackFit.expand,
                   children: [
@@ -129,6 +125,8 @@ class _FlowchartCanvasState extends State<FlowchartCanvas> {
                       painter: _GridPainter(
                         dotColor: Colors.grey.shade600,
                         backgroundColor: Colors.grey.shade800,
+                        // Defaults are now handled in the constructor,
+                        // or you can pass them here: spacing: 20, dotRadius: 2
                       ),
                       size: Size.infinite,
                     ),
@@ -147,13 +145,12 @@ class _FlowchartCanvasState extends State<FlowchartCanvas> {
                         key: ValueKey(block.id),
                         block: block,
                       );
-                    }).toList(),
+                    }),
 
                     // 4. Draw the animation overlay
                     _buildAnimationOverlay(context, provider),
-                    // vvv --- 5. ADD THE DELETE BUTTON --- vvv
+                    // 5. Draw the delete button
                     _buildDeleteButton(provider),
-                    // ^^^ --- END OF ADDITION --- ^^^
                   ],
                 ),
               ),
@@ -171,7 +168,6 @@ class _FlowchartCanvasState extends State<FlowchartCanvas> {
   }
 }
 
-// (_DraggableFlowBlock class is unchanged)
 class _DraggableFlowBlock extends StatelessWidget {
   final FlowBlock block;
   const _DraggableFlowBlock({super.key, required this.block});
@@ -251,10 +247,10 @@ class _GridPainter extends CustomPainter {
   final Color backgroundColor;
 
   _GridPainter({
-    this.spacing = 30.0,
-    this.dotRadius = 1.0,
     required this.dotColor,
     required this.backgroundColor,
+    this.spacing = 20.0,  // ✅ FIXED: Added default value
+    this.dotRadius = 2.0, // ✅ FIXED: Added default value
   });
 
   @override

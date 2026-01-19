@@ -27,11 +27,11 @@ class _LoopState extends State<Loop> {
     );
   }
 
-  Widget _buildDraggableTemplate(String label, String _bleData) {
+  Widget _buildDraggableTemplate(String label, String bleData) {
     final provider = context.read<BlockProvider>();
     final template = BlockModels(
       id: '',
-      bleData: _bleData,
+      bleData: bleData,
       position: Offset.zero,
       label: label,
       block: 'lib/Resources/loopIcons/repeatblock.png',

@@ -13,10 +13,10 @@ class InstitutionAdminScreen extends StatefulWidget {
 class _InstitutionAdminScreenState extends State<InstitutionAdminScreen> {
   // MOCK STATE - Replace with Provider/Firestore later
   final List<MockTeacher> _teachers = [
-    MockTeacher(id: Uuid().v4(), name: 'Ms. Smith', email: 'ms.s@inst.com', gradeLevel: 0),
-    MockTeacher(id: Uuid().v4(), name: 'Mr. Jones', email: 'mr.j@inst.com', gradeLevel: 0),
-    MockTeacher(id: Uuid().v4(), name: 'Dr. Lee', email: 'dr.l@inst.com', gradeLevel: 0),
-    MockTeacher(id: Uuid().v4(), name: 'Mrs. Patel', email: 'mrs.p@inst.com', gradeLevel: 7), // Already assigned
+    MockTeacher(id: const Uuid().v4(), name: 'Ms. Smith', email: 'ms.s@inst.com', gradeLevel: 0),
+    MockTeacher(id: const Uuid().v4(), name: 'Mr. Jones', email: 'mr.j@inst.com', gradeLevel: 0),
+    MockTeacher(id: const Uuid().v4(), name: 'Dr. Lee', email: 'dr.l@inst.com', gradeLevel: 0),
+    MockTeacher(id: const Uuid().v4(), name: 'Mrs. Patel', email: 'mrs.p@inst.com', gradeLevel: 7), // Already assigned
   ];
 
   final TextEditingController _nameController = TextEditingController();
@@ -30,7 +30,7 @@ class _InstitutionAdminScreenState extends State<InstitutionAdminScreen> {
       final newName = _nameController.text.trim();
       final newEmail = _emailController.text.trim();
       if (newName.isNotEmpty && newEmail.isNotEmpty) {
-        _teachers.add(MockTeacher(id: Uuid().v4(), name: newName, email: newEmail));
+        _teachers.add(MockTeacher(id: const Uuid().v4(), name: newName, email: newEmail));
         _nameController.clear();
         _emailController.clear();
         Navigator.pop(context);
@@ -150,14 +150,15 @@ class _InstitutionAdminScreenState extends State<InstitutionAdminScreen> {
                     orElse: () => MockTeacher(id: 'none', name: 'Unassigned', email: 'none'));
 
                 return DragTarget<String>(
-                  onWillAccept: (teacherId) => true, // Accept any teacher ID
-                  onAccept: (teacherId) {
+                  onWillAcceptWithDetails: (details) => true, // Accept any teacher ID
+                  onAcceptWithDetails: (details) {
                     // 1. If a teacher is already here, unassign them first
                     if (assignedTeacher.id != 'none') {
                       _unassignTeacher(assignedTeacher.id);
                     }
                     // 2. Assign the new teacher to this grade
-                    _assignTeacher(teacherId, grade);
+                    // ✅ FIX: Use details.data to get the String ID
+                    _assignTeacher(details.data, grade);
                   },
                   builder: (context, candidate, rejected) {
                     return _buildGradeDropTarget(grade, assignedTeacher, candidate.isNotEmpty);

@@ -79,10 +79,14 @@ dependencies:
   google_generative_ai: ^0.4.7
   flutter_chat_ui: ^1.6.15
   flutter_chat_types: ^3.6.2
+  camera_windows: ^0.2.1
 
+  highlight: any
+  camera_macos: ^0.0.9
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_lints: ^6.0.0
 
 flutter_launcher_icons:
   android: true

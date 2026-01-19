@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart'; // Import Google Fonts
 import 'package:little_emmi/Models/flow_block_model.dart';
-import 'dart:math' as math; // Import math for pi
+// Import math for pi
 
 /// A widget that renders a single flowchart block based on its type.
 class FlowchartShapeWidget extends StatelessWidget {
@@ -121,7 +121,7 @@ class FlowchartShapeWidget extends StatelessWidget {
   /// Diamond shape for Decision, built with ClipPath for correct alignment.
   Widget _buildDiamond(
       Widget child, Color color, BoxBorder? border, List<BoxShadow> shadow) {
-    return Container(
+    return SizedBox(
       width: block.size.width,
       height: block.size.height,
       child: ClipPath(
@@ -141,7 +141,7 @@ class FlowchartShapeWidget extends StatelessWidget {
   /// Parallelogram for Input/Output, built with ClipPath for correct alignment.
   Widget _buildParallelogram(
       Widget child, Color color, BoxBorder? border, List<BoxShadow> shadow) {
-    return Container(
+    return SizedBox(
       width: block.size.width,
       height: block.size.height,
       child: ClipPath(

@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,7 +13,6 @@ import '../../Screens/Admin/super_admin_screen.dart';
 import '../../Screens/Admin/institution_admin_screen.dart';
 import '../../Screens/Teacher/teacher_dashboard_screen.dart';
 import '../../Screens/Student/student_dashboard_screen.dart';
-import '../../Screens/Dashboard/dashboard_screen.dart';
 // ^^^ ---------------------------------------- ^^^
 
 // Defines the four user roles

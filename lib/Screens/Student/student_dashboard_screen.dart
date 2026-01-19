@@ -3,9 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 // VVV --- FIX: Point to the functional model file --- VVV
 import '../../Models/AdminModels.dart';
 // ^^^ ---------------------------------------------- ^^^
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:process_run/shell.dart';
-import 'dart:io';
 
 // Mock list of all apps and their icons/routes for the Student to use
 const Map<String, dynamic> appRoutes = {
