@@ -7,6 +7,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:camera/camera.dart';
 import 'package:path/path.dart' as p;
 import 'dart:io' show Platform;
 import 'package:process_run/shell.dart';
@@ -28,6 +29,7 @@ import 'package:little_emmi/Screens/GenAI/image_gen_screen.dart';
 import 'package:little_emmi/Screens/GenAI/music_gen_screen.dart';
 import 'package:little_emmi/Screens/Help/help_chat_screen.dart';
 import 'package:little_emmi/Screens/adaptive_quiz_demo.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class StudentDashboardScreen extends StatefulWidget {
   const StudentDashboardScreen({super.key});
@@ -46,6 +48,7 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
   void initState() {
     super.initState();
     _fetchUserName();
+    _requestCameraPermission();
     _internetCheckTimer = Timer.periodic(const Duration(seconds: 5), (timer) {
       _verifyRealInternet();
     });
@@ -65,6 +68,35 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
       }
     } catch (e) {
       if (!_isOffline && mounted) setState(() => _isOffline = true);
+    }
+  }
+
+  Future<void> _requestCameraPermission() async {
+    // 1. HANDLE WINDOWS (No pop-up request possible)
+    if (Platform.isWindows) {
+      try {
+        // On Windows, we check if we can access the list of cameras.
+        // If permission is denied in Windows Settings, this list is often empty
+        // or throws an error depending on the driver.
+        final cameras = await availableCameras();
+        if (cameras.isEmpty) {
+          debugPrint("No cameras found. Permission might be denied in Windows Settings.");
+          // Optional: Show a snackbar telling user to check Windows Settings
+        }
+      } catch (e) {
+        debugPrint("Camera access denied on Windows: $e");
+      }
+      return; // Stop here for Windows
+    }
+
+    // 2. HANDLE MOBILE (Android/iOS/macOS)
+    var status = await Permission.camera.status;
+    if (status.isDenied) {
+      await Permission.camera.request();
+    }
+
+    if (await Permission.camera.isPermanentlyDenied) {
+      openAppSettings();
     }
   }
 

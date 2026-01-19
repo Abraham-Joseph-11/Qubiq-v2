@@ -31,6 +31,7 @@ import 'package:little_emmi/Screens/MIT/mit_login_screen.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
