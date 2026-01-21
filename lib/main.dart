@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:io' show Platform; // Required for Platform checks
+import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -30,7 +30,8 @@ import 'package:little_emmi/Screens/MIT/mit_login_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  // 🚀 Start UI Immediately
+  // 🚀 CRITICAL FIX: Start the App INSTANTLY.
+  // We moved all 'await' calls to the Splash Screen to kill the black screen.
   runApp(const QubiQApp());
 }
 
@@ -54,7 +55,7 @@ class QubiQApp extends StatelessWidget {
           scaffoldBackgroundColor: const Color(0xFFF8FAFC),
           useMaterial3: true,
         ),
-        // 🚀 START HERE
+        // 🚀 Go straight to Splash Screen
         home: const RobotLaunchScreen(),
 
         routes: {
@@ -99,7 +100,8 @@ class _RobotLaunchScreenState extends State<RobotLaunchScreen> with SingleTicker
   @override
   void initState() {
     super.initState();
-    // 1. Start Animation Immediately
+
+    // 1. Setup Animation
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 3),
@@ -115,21 +117,22 @@ class _RobotLaunchScreenState extends State<RobotLaunchScreen> with SingleTicker
 
     _controller.forward();
 
-    // 2. Add a tiny delay before starting heavy logic to let the UI paint first
-    // This fixes the "Intermittent Black Screen" on phones
-    Future.delayed(const Duration(milliseconds: 100), () {
+    // 2. 🚀 CRITICAL FIX: Use addPostFrameCallback
+    // This ensures the logo is drawn to the screen BEFORE we start loading Firebase.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       _initializeApp();
     });
   }
 
   Future<void> _initializeApp() async {
     try {
-      // A. Initialize Firebase
+      // A. Initialize Firebase (Background)
       await Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform,
       );
 
-      // 🛑 B. DESKTOP LOGOUT FIX (Added MacOS Support):
+      // B. DESKTOP FORCE LOGOUT (Windows & MacOS)
+      // This ensures a clean login state every time the app opens on desktop.
       if (Platform.isWindows || Platform.isMacOS) {
         await FirebaseAuth.instance.signOut();
       }
@@ -137,6 +140,7 @@ class _RobotLaunchScreenState extends State<RobotLaunchScreen> with SingleTicker
       // C. Initialize Camera (Windows Check)
       if (Platform.isWindows) {
         try {
+          // No 'await' here to prevent blocking if camera is slow
           CameraWindows.registerWith();
         } catch (e) {
           debugPrint("Camera init skipped: $e");
@@ -147,7 +151,7 @@ class _RobotLaunchScreenState extends State<RobotLaunchScreen> with SingleTicker
       SharedPreferences prefs = await SharedPreferences.getInstance();
       bool isActivated = prefs.getBool('is_activated') ?? false;
 
-      // E. Wait (Total 3 seconds for animation)
+      // E. Wait for Animation (Ensure at least 3 seconds passed)
       await Future.delayed(const Duration(seconds: 3));
 
       if (!mounted) return;
@@ -163,6 +167,7 @@ class _RobotLaunchScreenState extends State<RobotLaunchScreen> with SingleTicker
 
     } catch (e) {
       debugPrint("Critical Init Error: $e");
+      // Safety Net: Go to login if initialization fails
       if (mounted) {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (context) => const LittleEmmiLoginScreen()),
@@ -180,6 +185,7 @@ class _RobotLaunchScreenState extends State<RobotLaunchScreen> with SingleTicker
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
@@ -199,7 +205,7 @@ class _RobotLaunchScreenState extends State<RobotLaunchScreen> with SingleTicker
                   'assets/images/qubiq_logo.png',
                   width: 700,
                   fit: BoxFit.contain,
-                  errorBuilder: (context, error, stackTrace) {
+                  errorBuilder: (c, e, s) {
                     return const Icon(Icons.smart_toy_rounded, size: 100, color: Colors.indigo);
                   },
                 ),
@@ -213,13 +219,15 @@ class _RobotLaunchScreenState extends State<RobotLaunchScreen> with SingleTicker
 }
 
 // ------------------------------------------------------------------
-// 🚀 AUTH WRAPPER
+// 🚀 AUTH WRAPPER (Handles Auto-Login)
 // ------------------------------------------------------------------
 class AuthWrapper extends StatelessWidget {
   const AuthWrapper({super.key});
 
   @override
   Widget build(BuildContext context) {
+    // This StreamBuilder checks the device cache immediately.
+    // If a user is found, it loads the dashboard instantly.
     return StreamBuilder<User?>(
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {

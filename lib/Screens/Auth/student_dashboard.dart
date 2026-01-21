@@ -12,12 +12,10 @@ import 'package:path/path.dart' as p;
 import 'dart:io' show Platform;
 import 'package:process_run/shell.dart';
 
-// ✅ Firebase & Connectivity Imports
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:http/http.dart' as http;
 
-// ✅ Import Screens
 import 'package:little_emmi/Screens/flowchart_ide_screen.dart';
 import 'package:little_emmi/Screens/python_ide_screen.dart';
 import 'package:little_emmi/Screens/inappwebview_screen.dart';
@@ -48,6 +46,8 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> with Wi
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+
+    // 🚀 CACHE START: Load data immediately
     _fetchUserName();
     _requestCameraPermission();
     _internetCheckTimer = Timer.periodic(const Duration(seconds: 5), (timer) {
@@ -55,18 +55,18 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> with Wi
     });
   }
 
+  // 🚀 CACHE: Pre-load images for smoother UI
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     _precacheAssets();
   }
 
+  // 🚀 LOGOUT: Handle Desktop Close
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    // 🚀 UPDATED: Checks for both Windows AND macOS
     if ((Platform.isWindows || Platform.isMacOS) && state == AppLifecycleState.detached) {
       FirebaseAuth.instance.signOut();
-      debugPrint("Desktop App Closing: User Signed Out.");
     }
   }
 
@@ -116,14 +116,9 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> with Wi
       }
       return;
     }
-
     var status = await Permission.camera.status;
-    if (status.isDenied) {
-      await Permission.camera.request();
-    }
-    if (await Permission.camera.isPermanentlyDenied) {
-      openAppSettings();
-    }
+    if (status.isDenied) await Permission.camera.request();
+    if (await Permission.camera.isPermanentlyDenied) openAppSettings();
   }
 
   Future<void> _launchEmmiV2App() async {
@@ -138,20 +133,23 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> with Wi
     }
   }
 
+  // 🚀 CACHE LOGIC: Fetch User Name
   Future<void> _fetchUserName() async {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       try {
+        // 1. Check Local Cache FIRST (Fastest)
         final docCache = await FirebaseFirestore.instance
             .collection('users')
             .doc(user.uid)
-            .get(const GetOptions(source: Source.cache));
+            .get(const GetOptions(source: Source.cache)); //
 
         if (docCache.exists && mounted) {
           setState(() => _userName = docCache.get('name'));
-          return;
+          return; // If found in cache, we are done!
         }
 
+        // 2. Fallback to Server if cache is empty
         final docServer = await FirebaseFirestore.instance
             .collection('users')
             .doc(user.uid)
@@ -177,23 +175,19 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> with Wi
               color: Colors.white.withOpacity(0.9),
               borderRadius: BorderRadius.circular(24),
               border: Border.all(color: Colors.white, width: 2),
-              boxShadow: [
-                BoxShadow(color: Colors.black.withOpacity(0.2), blurRadius: 20, spreadRadius: 5),
-              ],
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 const Icon(Icons.construction_rounded, size: 50, color: Colors.orangeAccent),
                 const SizedBox(height: 20),
-                Text("Coming Soon!", style: GoogleFonts.poppins(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.blueGrey[900])),
+                Text("Coming Soon!", style: GoogleFonts.poppins(fontSize: 22, fontWeight: FontWeight.bold)),
                 const SizedBox(height: 10),
-                Text("$featureName is under development.", textAlign: TextAlign.center, style: GoogleFonts.poppins(fontSize: 14, color: Colors.blueGrey[600])),
+                Text("$featureName is under development.", textAlign: TextAlign.center),
                 const SizedBox(height: 24),
                 ElevatedButton(
                   onPressed: () => Navigator.pop(context),
-                  style: ElevatedButton.styleFrom(backgroundColor: Colors.orangeAccent, foregroundColor: Colors.white),
-                  child: Text("Got it", style: GoogleFonts.poppins(fontWeight: FontWeight.bold)),
+                  child: const Text("Got it"),
                 ),
               ],
             ),
@@ -203,7 +197,6 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> with Wi
     );
   }
 
-  // 🚀 FIXED HEADER: LOGOUT NOW WORKS
   Widget _buildHeader(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -215,10 +208,8 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> with Wi
         IconButton(
           icon: const Icon(Icons.logout_rounded, color: Colors.redAccent),
           onPressed: () async {
-            // 1. Sign out from Firebase
+            // 🛑 FORCE LOGOUT
             await FirebaseAuth.instance.signOut();
-
-            // 2. Clear stack and go to Login
             if (context.mounted) {
               Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(builder: (context) => const LittleEmmiLoginScreen()),
@@ -235,7 +226,6 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> with Wi
   Widget build(BuildContext context) {
     bool isMobile = MediaQuery.of(context).size.width < 800;
 
-    // --- APP LISTS ---
     final List<DashboardItem> quizApps = [
       DashboardItem(title: 'Smart Quiz', subtitle: 'Adaptive Levels', imagePath: 'assets/images/quiz.png', onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const AdaptiveLearningMenu()))),
     ];
@@ -339,7 +329,7 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> with Wi
     );
   }
 
-  // --- HELPERS (Keep these standard) ---
+  // --- HELPERS ---
   Widget _buildRealProjectTile(BuildContext context, Map<String, dynamic> data, String docId) {
     String tool = data['tool'] ?? 'General';
     DateTime? dueDate = data['dueDate'] != null ? (data['dueDate'] as Timestamp).toDate() : null;
